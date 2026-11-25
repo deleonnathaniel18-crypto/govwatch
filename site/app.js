@@ -221,6 +221,8 @@ function renderWatchDeskAndArrays() {
     .join("");
 
   document.getElementById("statSourcesCount").textContent = state.sources.length;
+  const viewAllBtn = document.getElementById("viewAllSourcesBtn");
+  if (viewAllBtn) viewAllBtn.textContent = `View all (${state.sources.length})`;
   document.getElementById("statDatasetsCount").textContent = state.datasets.length;
 
   document.getElementById("overviewDatasetList").innerHTML = state.datasets

@@ -205,6 +205,57 @@
       "robots_txt_checked": false,
       "monitoring_enabled": true,
       "notes": "Centralized portal for EO No. 2 (s. 2016) Freedom of Information requests."
+    },
+    {
+      "id": "senate-portal",
+      "name": "Senate of the Philippines Portal",
+      "agency": "Senate of the Philippines",
+      "agency_abbr": "SENATE",
+      "category": "document_repository",
+      "url": "https://senate.gov.ph",
+      "check_method": "HEAD",
+      "expected_status": [200],
+      "timeout_seconds": 15,
+      "schedule_type": "continuous_service",
+      "expected_update_frequency": null,
+      "schedule_evidence_url": null,
+      "robots_txt_checked": false,
+      "monitoring_enabled": true,
+      "notes": "Official portal for Senate bills, resolutions, committee reports, and legislative records."
+    },
+    {
+      "id": "house-congress-portal",
+      "name": "House of Representatives Portal",
+      "agency": "House of Representatives of the Philippines",
+      "agency_abbr": "HREP",
+      "category": "document_repository",
+      "url": "https://www.congress.gov.ph",
+      "check_method": "HEAD",
+      "expected_status": [200],
+      "timeout_seconds": 15,
+      "schedule_type": "continuous_service",
+      "expected_update_frequency": null,
+      "schedule_evidence_url": null,
+      "robots_txt_checked": false,
+      "monitoring_enabled": true,
+      "notes": "Official portal for House bills, journals, and legislative documents."
+    },
+    {
+      "id": "supreme-court-portal",
+      "name": "Supreme Court of the Philippines Portal",
+      "agency": "Supreme Court of the Philippines",
+      "agency_abbr": "SC",
+      "category": "document_repository",
+      "url": "https://sc.judiciary.gov.ph",
+      "check_method": "HEAD",
+      "expected_status": [200],
+      "timeout_seconds": 15,
+      "schedule_type": "continuous_service",
+      "expected_update_frequency": null,
+      "schedule_evidence_url": null,
+      "robots_txt_checked": false,
+      "monitoring_enabled": true,
+      "notes": "Official portal for Supreme Court decisions, issuances, and judiciary announcements."
     }
   ]
 }
