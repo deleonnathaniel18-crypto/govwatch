@@ -94,17 +94,18 @@ code {
     gap: 0.75rem;
   }
 
-  .brand-logo {
-    width: 40px;
-    height: 40px;
+  .topbar .brand-logo {
+    width: 44px;
+    height: 44px;
   }
 
-  .brand-name {
-    font-size: 1.15rem;
+  .topbar .brand-name {
+    font-size: 1.45rem;
+    letter-spacing: 0.02em;
   }
 
-  .brand-sub {
-    font-size: 0.72rem;
+  .topbar .brand-sub {
+    font-size: 0.76rem;
   }
 
   .topbar-right {
