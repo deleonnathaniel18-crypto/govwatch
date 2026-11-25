@@ -14,17 +14,18 @@ jobs:
       - name: Run direct PH ISP probe (no relay, dry-run)
         run: |
           python3 scripts/monitor.py
-          python3 -c '
+          python3 - << 'EOF'
           import json
           sources = json.loads(open("config/sources.json").read())["sources"]
           status = json.loads(open("site/data/status.json").read())
-          print(f"\n=== PH SELF-HOSTED DRY RUN SUMMARY ({status[\"generated_at\"]}) ===")
+          print(f"\n=== PH SELF-HOSTED DRY RUN SUMMARY ({status['generated_at']}) ===")
           print("Counts:", status["summary"])
           print("-" * 90)
           for s in sources:
               st = status["sources"].get(s["id"], {})
-              print(f"{s[\"agency_abbr\"]:10} | {st.get(\"status\", \"?\"):22} | HTTP {str(st.get(\"http_status\")):4} | {str(st.get(\"response_time_ms\")):>6} ms | {s[\"url\"]} | {st.get(\"last_error\") or \"\"}")
-          '
+              err = st.get("last_error") or ""
+              print(f"{s['agency_abbr']:10} | {st.get('status', '?'):22} | HTTP {str(st.get('http_status')):4} | {str(st.get('response_time_ms')):>6} ms | {s['url']} | {err}")
+          EOF
 
       - name: Clean dry-run changes (never touch main)
         if: always()
