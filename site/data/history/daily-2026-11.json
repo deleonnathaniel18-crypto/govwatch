@@ -4,105 +4,125 @@
   "sources": {
     "psa-openstat-api": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 6,
+        "checks": 7,
+        "success": 7,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 635
+        "avg_latency_ms": 673
       }
     },
     "psa-openstat-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 6,
+        "restricted": 7,
         "avg_latency_ms": 32
       }
     },
     "psa-main-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 6,
-        "avg_latency_ms": 38
+        "restricted": 7,
+        "avg_latency_ms": 37
       }
     },
     "data-gov-ph-portal": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 6,
+        "checks": 7,
+        "success": 7,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1416
+        "avg_latency_ms": 1356
       }
     },
     "data-gov-ph-ckan-api": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 6,
+        "checks": 7,
+        "success": 7,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1336
+        "avg_latency_ms": 1286
       }
     },
     "philgeps-open-data": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 6,
+        "checks": 7,
+        "success": 7,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1007
+        "avg_latency_ms": 997
       }
     },
     "dbm-main-portal": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 2,
+        "checks": 7,
+        "success": 3,
         "issues": 1,
         "unavailable": 3,
         "restricted": 0,
-        "avg_latency_ms": 698
+        "avg_latency_ms": 837
       }
     },
     "coa-main-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 6,
-        "avg_latency_ms": 50
+        "restricted": 7,
+        "avg_latency_ms": 48
       }
     },
     "dof-main-portal": {
       "2026-11-25": {
-        "checks": 6,
-        "success": 2,
+        "checks": 7,
+        "success": 3,
         "issues": 0,
         "unavailable": 0,
         "restricted": 4,
-        "avg_latency_ms": 193
+        "avg_latency_ms": 237
       }
     },
     "dict-main-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 6,
-        "avg_latency_ms": 51
+        "restricted": 7,
+        "avg_latency_ms": 50
       }
     },
     "official-gazette": {
+      "2026-11-25": {
+        "checks": 7,
+        "success": 0,
+        "issues": 0,
+        "unavailable": 0,
+        "restricted": 7,
+        "avg_latency_ms": 35
+      }
+    },
+    "foi-portal": {
+      "2026-11-25": {
+        "checks": 7,
+        "success": 0,
+        "issues": 0,
+        "unavailable": 0,
+        "restricted": 7,
+        "avg_latency_ms": 38
+      }
+    },
+    "senate-portal": {
       "2026-11-25": {
         "checks": 6,
         "success": 0,
@@ -112,42 +132,22 @@
         "avg_latency_ms": 37
       }
     },
-    "foi-portal": {
+    "house-congress-portal": {
       "2026-11-25": {
         "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
         "restricted": 6,
-        "avg_latency_ms": 40
-      }
-    },
-    "senate-portal": {
-      "2026-11-25": {
-        "checks": 5,
-        "success": 0,
-        "issues": 0,
-        "unavailable": 0,
-        "restricted": 5,
-        "avg_latency_ms": 38
-      }
-    },
-    "house-congress-portal": {
-      "2026-11-25": {
-        "checks": 5,
-        "success": 0,
-        "issues": 0,
-        "unavailable": 0,
-        "restricted": 5,
-        "avg_latency_ms": 264
+        "avg_latency_ms": 253
       }
     },
     "supreme-court-portal": {
       "2026-11-25": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 1,
-        "unavailable": 4,
+        "unavailable": 5,
         "restricted": 0,
         "avg_latency_ms": null
       }
