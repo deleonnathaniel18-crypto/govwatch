@@ -135,6 +135,15 @@ def classify_relay_payload(
             "error": f"WAF/bot protection detected (HTTP {status_code})",
         }
 
+    if status_code == 525:
+        err_msg = "HTTP 525 (SSL handshake failed)"
+    elif status_code == 526:
+        err_msg = "HTTP 526 (Invalid/incomplete origin SSL certificate)"
+    elif status_code is not None:
+        err_msg = f"HTTP {status_code}"
+    else:
+        err_msg = f"Relay missing http_status ({list(payload.keys())})"
+
     return {
         "outcome": "issues",
         "http_status": status_code,
@@ -142,7 +151,7 @@ def classify_relay_payload(
         "etag": None,
         "last_modified": None,
         "sha256": None,
-        "error": f"HTTP {status_code}" if status_code is not None else f"Relay missing http_status ({list(payload.keys())})",
+        "error": err_msg,
     }
 
 
