@@ -66,16 +66,24 @@ code {
 
 @media (min-width: 981px) {
   .app-shell {
-    display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
+    display: block;
   }
 
   .topbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
     height: 100vh;
+    overflow-y: auto;
     border-bottom: none;
     border-right: 1px solid var(--border-subtle);
+  }
+
+  .main-shell {
+    margin-left: 280px;
+    min-height: 100vh;
   }
 
   .topbar-inner {
@@ -961,7 +969,7 @@ main.container {
 }
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .source-card, .hud-panel, .kpi-card, .col-main, .col-side {
