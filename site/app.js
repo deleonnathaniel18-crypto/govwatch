@@ -53,7 +53,19 @@ function switchView(viewName) {
 }
 
 function renderKpis() {
-  const s = state.status.summary;
+  const s = {
+    total_monitored: state.sources.length,
+    online: 0,
+    experiencing_issues: 0,
+    unavailable: 0,
+    monitoring_restricted: 0,
+    not_yet_checked: 0,
+  };
+  state.sources.forEach((src) => {
+    const st = state.status.sources[src.id]?.status || "not_yet_checked";
+    if (st in s) s[st] += 1;
+    else s.not_yet_checked += 1;
+  });
   const kpis = [
     {
       label: "MONITORED ENDPOINTS",
@@ -110,7 +122,6 @@ function renderKpis() {
 function renderOverviewMatrix() {
   const tbody = document.getElementById("overviewMatrixBody");
   tbody.innerHTML = state.sources
-    .slice(0, 8)
     .map((src) => {
       const st = state.status.sources[src.id] || {};
       const httpCode = st.http_status ?? "—";

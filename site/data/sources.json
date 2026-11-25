@@ -256,6 +256,23 @@
       "robots_txt_checked": false,
       "monitoring_enabled": true,
       "notes": "Official portal for Supreme Court decisions, issuances, and judiciary announcements."
+    },
+    {
+      "id": "bsp-main-portal",
+      "name": "Bangko Sentral ng Pilipinas Portal",
+      "agency": "Bangko Sentral ng Pilipinas",
+      "agency_abbr": "BSP",
+      "category": "agency_portal",
+      "url": "https://www.bsp.gov.ph",
+      "check_method": "HEAD",
+      "expected_status": [200],
+      "timeout_seconds": 15,
+      "schedule_type": "continuous_service",
+      "expected_update_frequency": null,
+      "schedule_evidence_url": null,
+      "robots_txt_checked": false,
+      "monitoring_enabled": true,
+      "notes": "Official central bank portal for monetary policy, inflation, exchange rates, and banking statistics."
     }
   ]
 }
