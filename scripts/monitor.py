@@ -142,7 +142,7 @@ def classify_relay_payload(
         "etag": None,
         "last_modified": None,
         "sha256": None,
-        "error": f"HTTP {status_code}" if status_code is not None else "Relay check failed",
+        "error": f"HTTP {status_code}" if status_code is not None else f"Relay missing http_status ({list(payload.keys())})",
     }
 
 
@@ -481,6 +481,13 @@ def run_monitoring() -> None:
                 timeout=src.get("timeout_seconds", 15),
                 expected_statuses=src.get("expected_status", [200]),
             )
+            if result["http_status"] is None and str(result.get("error", "")).startswith("Relay "):
+                result = perform_http_check(
+                    url=url,
+                    method=src.get("check_method", "HEAD"),
+                    timeout=src.get("timeout_seconds", 15),
+                    expected_statuses=src.get("expected_status", [200]),
+                )
         else:
             result = perform_http_check(
                 url=url,
