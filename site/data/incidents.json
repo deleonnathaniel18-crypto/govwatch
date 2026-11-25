@@ -7,9 +7,9 @@
       "status": "open",
       "severity": "unavailable",
       "first_detected_at": "2026-11-25T19:21:17Z",
-      "last_observed_at": "2026-11-25T19:21:17Z",
+      "last_observed_at": "2026-11-25T19:23:03Z",
       "resolved_at": null,
-      "consecutive_failures_peak": 2,
+      "consecutive_failures_peak": 3,
       "evidence": {
         "observed_http_statuses": []
       }
@@ -20,9 +20,9 @@
       "status": "open",
       "severity": "unavailable",
       "first_detected_at": "2026-11-25T19:16:54Z",
-      "last_observed_at": "2026-11-25T19:21:17Z",
+      "last_observed_at": "2026-11-25T19:23:03Z",
       "resolved_at": null,
-      "consecutive_failures_peak": 3,
+      "consecutive_failures_peak": 4,
       "evidence": {
         "observed_http_statuses": [
           403
