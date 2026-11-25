@@ -16,12 +16,33 @@ const CATEGORY_LABELS = {
   public_service_portal: "Service Portal",
 };
 
+const VIEW_PATHS = {
+  overview: "/overview",
+  directory: "/sources",
+  history: "/history",
+  incidents: "/incidents",
+  methodology: "/methodology",
+  about: "/about",
+};
+
+const PATH_VIEWS = {
+  "/": "overview",
+  "/overview": "overview",
+  "/sources": "directory",
+  "/directory": "directory",
+  "/history": "history",
+  "/incidents": "incidents",
+  "/methodology": "methodology",
+  "/about": "about",
+};
+
 const state = {
   sources: [],
   status: null,
   incidents: [],
   datasets: [],
   history: null,
+  activeView: "overview",
 };
 
 function chipHtml(statusKey) {
@@ -42,7 +63,8 @@ function updateClock() {
   document.getElementById("clockBadge").textContent = `UTC // ${hh}:${mm}:${ss}`;
 }
 
-function switchView(viewName) {
+function switchView(viewName, push = true) {
+  state.activeView = viewName;
   document.querySelectorAll(".view").forEach((el) => el.classList.remove("active"));
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.view === viewName);
@@ -50,6 +72,13 @@ function switchView(viewName) {
   const target = document.getElementById(`view-${viewName}`);
   if (target) target.classList.add("active");
   document.getElementById("topbarRight").classList.remove("open");
+
+  if (push) {
+    const nextPath = VIEW_PATHS[viewName] || "/overview";
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({ view: viewName }, "", nextPath);
+    }
+  }
 }
 
 function renderKpis() {
@@ -390,7 +419,7 @@ function renderIncidents() {
     .join("");
 }
 
-function openSourceDetail(sourceId) {
+function openSourceDetail(sourceId, push = true) {
   const src = state.sources.find((s) => s.id === sourceId);
   if (!src) return;
   const st = state.status.sources[src.id] || {};
@@ -408,6 +437,33 @@ function openSourceDetail(sourceId) {
     <div class="detail-row"><span>Notes</span><span>${src.notes}</span></div>
   `;
   document.getElementById("detailModal").hidden = false;
+
+  if (push) {
+    const detailPath = `/source/${sourceId}`;
+    if (window.location.pathname !== detailPath) {
+      window.history.pushState({ view: state.activeView, sourceId }, "", detailPath);
+    }
+  }
+}
+
+function closeSourceDetail(push = true) {
+  document.getElementById("detailModal").hidden = true;
+  if (push && window.location.pathname.startsWith("/source/")) {
+    window.history.pushState({ view: state.activeView }, "", VIEW_PATHS[state.activeView] || "/overview");
+  }
+}
+
+function applyRouteFromUrl() {
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (path.startsWith("/source/")) {
+    const sourceId = path.slice("/source/".length);
+    switchView(state.activeView || "directory", false);
+    openSourceDetail(sourceId, false);
+    return;
+  }
+  closeSourceDetail(false);
+  const viewName = PATH_VIEWS[path] || "overview";
+  switchView(viewName, false);
 }
 
 async function init() {
@@ -415,11 +471,11 @@ async function init() {
   setInterval(updateClock, 1000);
 
   const [sourcesRes, statusRes, incidentsRes, datasetsRes, historyIndexRes] = await Promise.all([
-    fetch("./data/sources.json").then((r) => r.json()),
-    fetch("./data/status.json").then((r) => r.json()),
-    fetch("./data/incidents.json").then((r) => r.json()),
-    fetch("./data/datasets.json").then((r) => r.json()),
-    fetch("./data/history/index.json").then((r) => r.json()).catch(() => ({ months: [] })),
+    fetch("/data/sources.json").then((r) => r.json()),
+    fetch("/data/status.json").then((r) => r.json()),
+    fetch("/data/incidents.json").then((r) => r.json()),
+    fetch("/data/datasets.json").then((r) => r.json()),
+    fetch("/data/history/index.json").then((r) => r.json()).catch(() => ({ months: [] })),
   ]);
 
   state.sources = sourcesRes.sources;
@@ -428,7 +484,7 @@ async function init() {
   state.datasets = datasetsRes.datasets;
 
   if (historyIndexRes.months && historyIndexRes.months.length > 0) {
-    state.history = await fetch(`./data/history/daily-${historyIndexRes.months[0]}.json`)
+    state.history = await fetch(`/data/history/daily-${historyIndexRes.months[0]}.json`)
       .then((r) => r.json())
       .catch(() => null);
   }
@@ -452,6 +508,9 @@ async function init() {
   renderDirectory();
   renderHistory();
   renderIncidents();
+  applyRouteFromUrl();
+
+  window.addEventListener("popstate", applyRouteFromUrl);
 
   document.querySelectorAll(".nav-btn").forEach((btn) =>
     btn.addEventListener("click", () => switchView(btn.dataset.view))
@@ -473,11 +532,9 @@ async function init() {
     if (target) openSourceDetail(target.dataset.sourceId);
   });
 
-  document.getElementById("closeModal").addEventListener("click", () => {
-    document.getElementById("detailModal").hidden = true;
-  });
+  document.getElementById("closeModal").addEventListener("click", () => closeSourceDetail(true));
   document.getElementById("detailModal").addEventListener("click", (e) => {
-    if (e.target.id === "detailModal") document.getElementById("detailModal").hidden = true;
+    if (e.target.id === "detailModal") closeSourceDetail(true);
   });
 }
 
