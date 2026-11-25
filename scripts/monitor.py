@@ -30,7 +30,7 @@ HISTORY_DIR = SITE_DATA / "history"
 USER_AGENT = "GovSourceWatch/1.0 (+https://github.com/govsource-watch; civic-tech-observatory)"
 MAX_BODY_HASH_BYTES = 5 * 1024 * 1024  # 5 MiB cap for SHA-256 hashing
 DOMAIN_DELAY_SECONDS = 2.0
-RETRY_BACKOFFS = (2.0, 5.0)
+RETRY_BACKOFFS = (2.0,)
 UNAVAILABLE_THRESHOLD = 2
 
 
@@ -167,10 +167,14 @@ def perform_http_check(
                     "error": last_error,
                 }
         except Exception as exc:
-            last_error = str(exc)
+            msg = str(exc).strip()
+            last_error = f"{type(exc).__name__}: {msg}" if msg else type(exc).__name__
 
         if attempt < len(RETRY_BACKOFFS):
             time.sleep(RETRY_BACKOFFS[attempt])
+
+    if method == "HEAD":
+        return perform_http_check(url, "GET", max(timeout, 25), expected_statuses)
 
     return {
         "outcome": "issues",

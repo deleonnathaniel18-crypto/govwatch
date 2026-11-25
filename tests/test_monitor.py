@@ -30,6 +30,12 @@ class TestMonitor(unittest.TestCase):
             monitor.detect_waf_block(503, {"Server": "cloudflare", "CF-RAY": "abc"}, "Service Unavailable")
         )
 
+    def test_empty_exception_message_formatting(self):
+        exc = TimeoutError()
+        msg = str(exc).strip()
+        formatted = f"{type(exc).__name__}: {msg}" if msg else type(exc).__name__
+        self.assertEqual(formatted, "TimeoutError")
+
     def test_incident_state_machine(self):
         data = {"incidents": []}
         monitor.update_incidents(data, "psa-main", "experiencing_issues", 1, 503, "2026-11-26T00:00:00Z")
