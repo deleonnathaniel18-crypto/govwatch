@@ -1,19 +1,19 @@
 const STATUS_META = {
-  online: { label: "NOMINAL", cls: "chip-online" },
-  experiencing_issues: { label: "DEGRADED", cls: "chip-issues" },
-  unavailable: { label: "OFFLINE", cls: "chip-unavailable" },
-  monitoring_restricted: { label: "WAF BLOCKED", cls: "chip-restricted" },
-  not_yet_checked: { label: "STANDBY", cls: "chip-neutral" },
-  monitoring_suspended: { label: "SUSPENDED", cls: "chip-neutral" },
+  online: { label: "Online", cls: "chip-online" },
+  experiencing_issues: { label: "Issues", cls: "chip-issues" },
+  unavailable: { label: "Unavailable", cls: "chip-unavailable" },
+  monitoring_restricted: { label: "WAF Restricted", cls: "chip-restricted" },
+  not_yet_checked: { label: "Not Checked", cls: "chip-neutral" },
+  monitoring_suspended: { label: "Suspended", cls: "chip-neutral" },
 };
 
 const CATEGORY_LABELS = {
-  agency_portal: "PORTAL",
-  open_data_portal: "OPEN DATA",
-  open_data_api: "CKAN API",
-  statistical_api: "PXWEB API",
-  document_repository: "DOCS REPO",
-  public_service_portal: "SERVICE",
+  agency_portal: "Agency Portal",
+  open_data_portal: "Open Data Portal",
+  open_data_api: "Open Data API",
+  statistical_api: "Statistical API",
+  document_repository: "Document Repo",
+  public_service_portal: "Service Portal",
 };
 
 const state = {
@@ -26,7 +26,7 @@ const state = {
 
 function chipHtml(statusKey) {
   const info = STATUS_META[statusKey] || STATUS_META.not_yet_checked;
-  return `<span class="status-chip ${info.cls}">■ ${info.label}</span>`;
+  return `<span class="status-chip ${info.cls}"><span class="dot"></span>${info.label}</span>`;
 }
 
 function formatTime(iso) {
@@ -422,13 +422,13 @@ async function init() {
 
   if (state.status.monitoring_active && state.status.generated_at) {
     document.getElementById("sysPill").classList.add("live");
-    document.getElementById("sysPillText").textContent = "TELEMETRY ACTIVE";
-    document.getElementById("lastSyncTag").textContent = `SYNC // ${formatTime(state.status.generated_at)}`;
+    document.getElementById("sysPillText").textContent = "Monitoring Active";
+    document.getElementById("lastSyncTag").textContent = `Last run: ${formatTime(state.status.generated_at)}`;
     const strip = document.getElementById("alertStrip");
     strip.classList.remove("standby");
     strip.classList.add("active");
-    document.getElementById("alertTitle").textContent = "TELEMETRY ACTIVE // SCHEDULED OBSERVATIONS RUNNING";
-    document.getElementById("lastUpdatedText").textContent = `Last completed run: ${formatTime(state.status.generated_at)}`;
+    document.getElementById("alertTitle").textContent = "Monitoring Active";
+    document.getElementById("lastUpdatedText").textContent = `Last completed check: ${formatTime(state.status.generated_at)}`;
   }
 
   populateFilters();
