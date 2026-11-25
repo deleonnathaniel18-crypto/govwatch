@@ -36,6 +36,20 @@ class TestMonitor(unittest.TestCase):
         formatted = f"{type(exc).__name__}: {msg}" if msg else type(exc).__name__
         self.assertEqual(formatted, "TimeoutError")
 
+    def test_relay_payload_classification(self):
+        ok_res = monitor.classify_relay_payload({"http_status": 200, "response_time_ms": 95}, [200])
+        self.assertEqual(ok_res["outcome"], "online")
+        waf_res = monitor.classify_relay_payload(
+            {"http_status": 403, "headers": {"server": "cloudflare"}, "snippet": "Just a moment"},
+            [200],
+        )
+        self.assertEqual(waf_res["outcome"], "monitoring_restricted")
+        down_res = monitor.classify_relay_payload(
+            {"http_status": 503, "headers": {"server": "cloudflare", "cf-ray": "xyz"}, "snippet": "Down"},
+            [200],
+        )
+        self.assertEqual(down_res["outcome"], "issues")
+
     def test_incident_state_machine(self):
         data = {"incidents": []}
         monitor.update_incidents(data, "psa-main", "experiencing_issues", 1, 503, "2026-11-26T00:00:00Z")

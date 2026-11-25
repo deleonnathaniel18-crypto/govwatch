@@ -32,6 +32,9 @@ jobs:
           python3 -m unittest discover -s tests -v
 
       - name: Run monitoring checks
+        env:
+          PROBE_RELAY_URL: ${{ secrets.PROBE_RELAY_URL }}
+          PROBE_RELAY_KEY: ${{ secrets.PROBE_RELAY_KEY }}
         run: python3 scripts/monitor.py
 
       - name: Commit updated monitoring data

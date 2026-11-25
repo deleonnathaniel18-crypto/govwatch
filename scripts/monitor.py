@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -91,6 +92,107 @@ def check_robots_allowed(url: str, cache: dict[str, urllib.robotparser.RobotFile
     return rp.can_fetch(USER_AGENT, url)
 
 
+def classify_relay_payload(
+    payload: dict[str, Any],
+    expected_statuses: list[int],
+) -> dict[str, Any]:
+    """Convert a Cloudflare Worker relay JSON payload into a standard check result."""
+    if "error" in payload and "http_status" not in payload:
+        return {
+            "outcome": "issues",
+            "http_status": None,
+            "response_time_ms": None,
+            "etag": None,
+            "last_modified": None,
+            "sha256": None,
+            "error": f"Relay: {payload['error']}",
+        }
+
+    status_code = payload.get("http_status")
+    headers = payload.get("headers") or {}
+    snippet = payload.get("snippet") or ""
+    latency_ms = payload.get("response_time_ms")
+
+    if status_code in expected_statuses:
+        return {
+            "outcome": "online",
+            "http_status": status_code,
+            "response_time_ms": latency_ms,
+            "etag": payload.get("etag"),
+            "last_modified": payload.get("last_modified"),
+            "sha256": None,
+            "error": None,
+        }
+
+    if status_code is not None and detect_waf_block(status_code, headers, snippet):
+        return {
+            "outcome": "monitoring_restricted",
+            "http_status": status_code,
+            "response_time_ms": latency_ms,
+            "etag": None,
+            "last_modified": None,
+            "sha256": None,
+            "error": f"WAF/bot protection detected (HTTP {status_code})",
+        }
+
+    return {
+        "outcome": "issues",
+        "http_status": status_code,
+        "response_time_ms": latency_ms,
+        "etag": None,
+        "last_modified": None,
+        "sha256": None,
+        "error": f"HTTP {status_code}" if status_code is not None else "Relay check failed",
+    }
+
+
+def perform_relay_check(
+    relay_url: str,
+    relay_key: str,
+    url: str,
+    method: str,
+    timeout: int,
+    expected_statuses: list[int],
+) -> dict[str, Any]:
+    """Probe a .gov.ph URL via the optional Cloudflare Worker relay."""
+    qs = urllib.parse.urlencode({"url": url, "method": method})
+    full_url = f"{relay_url.rstrip('/')}?{qs}"
+    req = urllib.request.Request(
+        full_url,
+        method="GET",
+        headers={"X-Probe-Key": relay_key, "Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=max(timeout, 20)) as resp:
+            payload = json.loads(resp.read(65536).decode("utf-8"))
+            return classify_relay_payload(payload, expected_statuses)
+    except urllib.error.HTTPError as exc:
+        try:
+            payload = json.loads(exc.read(8192).decode("utf-8"))
+            return classify_relay_payload(payload, expected_statuses)
+        except Exception:
+            return {
+                "outcome": "issues",
+                "http_status": None,
+                "response_time_ms": None,
+                "etag": None,
+                "last_modified": None,
+                "sha256": None,
+                "error": f"Relay HTTP {exc.code}",
+            }
+    except Exception as exc:
+        msg = str(exc).strip()
+        return {
+            "outcome": "issues",
+            "http_status": None,
+            "response_time_ms": None,
+            "etag": None,
+            "last_modified": None,
+            "sha256": None,
+            "error": f"Relay {type(exc).__name__}: {msg}" if msg else f"Relay {type(exc).__name__}",
+        }
+
+
 def perform_http_check(
     url: str,
     method: str,
@@ -166,6 +268,12 @@ def perform_http_check(
                     "sha256": None,
                     "error": last_error,
                 }
+        except urllib.error.URLError as exc:
+            reason = exc.reason
+            reason_str = str(reason).strip()
+            if not reason_str:
+                reason_str = type(reason).__name__
+            last_error = f"URLError: {reason_str}"
         except Exception as exc:
             msg = str(exc).strip()
             last_error = f"{type(exc).__name__}: {msg}" if msg else type(exc).__name__
@@ -337,7 +445,12 @@ def run_monitoring() -> None:
 
         prev = status_data["sources"].get(sid, {})
         if not src.get("monitoring_enabled", True) or not is_valid_govph_url(url):
-            status_data["sources"][sid] = {**prev, "status": "monitoring_suspended"}
+            status_data["sources"][sid] = {
+                **prev,
+                "status": "monitoring_suspended",
+                "last_checked_at": now_iso,
+                "last_error": src.get("notes") or "Monitoring disabled in registry",
+            }
             summary["monitoring_suspended"] += 1
             continue
 
@@ -356,12 +469,25 @@ def run_monitoring() -> None:
         if domain in last_domain_hit and elapsed < DOMAIN_DELAY_SECONDS:
             time.sleep(DOMAIN_DELAY_SECONDS - elapsed)
 
-        result = perform_http_check(
-            url=url,
-            method=src.get("check_method", "HEAD"),
-            timeout=src.get("timeout_seconds", 15),
-            expected_statuses=src.get("expected_status", [200]),
-        )
+        relay_url = os.environ.get("PROBE_RELAY_URL", "").strip()
+        relay_key = os.environ.get("PROBE_RELAY_KEY", "").strip()
+
+        if relay_url and relay_key:
+            result = perform_relay_check(
+                relay_url=relay_url,
+                relay_key=relay_key,
+                url=url,
+                method=src.get("check_method", "HEAD"),
+                timeout=src.get("timeout_seconds", 15),
+                expected_statuses=src.get("expected_status", [200]),
+            )
+        else:
+            result = perform_http_check(
+                url=url,
+                method=src.get("check_method", "HEAD"),
+                timeout=src.get("timeout_seconds", 15),
+                expected_statuses=src.get("expected_status", [200]),
+            )
         last_domain_hit[domain] = time.monotonic()
 
         outcome = result["outcome"]
