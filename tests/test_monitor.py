@@ -49,6 +49,8 @@ class TestMonitor(unittest.TestCase):
             [200],
         )
         self.assertEqual(down_res["outcome"], "issues")
+        ssl_res = monitor.classify_relay_payload({"http_status": 526, "response_time_ms": 110}, [200])
+        self.assertEqual(ssl_res["outcome"], "monitoring_restricted")
 
     def test_incident_state_machine(self):
         data = {"incidents": []}

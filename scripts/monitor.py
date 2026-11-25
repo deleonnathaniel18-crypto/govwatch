@@ -135,14 +135,27 @@ def classify_relay_payload(
             "error": f"WAF/bot protection detected (HTTP {status_code})",
         }
 
-    if status_code == 525:
-        err_msg = "HTTP 525 (SSL handshake failed)"
-    elif status_code == 526:
-        err_msg = "HTTP 526 (Invalid/incomplete origin SSL certificate)"
-    elif status_code is not None:
-        err_msg = f"HTTP {status_code}"
-    else:
-        err_msg = f"Relay missing http_status ({list(payload.keys())})"
+    if status_code in (525, 526):
+        err_msg = (
+            "HTTP 525 (SSL handshake failed)"
+            if status_code == 525
+            else "HTTP 526 (Invalid/incomplete origin SSL certificate)"
+        )
+        return {
+            "outcome": "monitoring_restricted",
+            "http_status": status_code,
+            "response_time_ms": latency_ms,
+            "etag": None,
+            "last_modified": None,
+            "sha256": None,
+            "error": err_msg,
+        }
+
+    err_msg = (
+        f"HTTP {status_code}"
+        if status_code is not None
+        else f"Relay missing http_status ({list(payload.keys())})"
+    )
 
     return {
         "outcome": "issues",
@@ -350,7 +363,7 @@ def update_incidents(
                 statuses = open_inc["evidence"].setdefault("observed_http_statuses", [])
                 if http_status not in statuses:
                     statuses.append(http_status)
-    elif new_status == "online" and open_inc is not None:
+    elif new_status in ("online", "monitoring_restricted") and open_inc is not None:
         open_inc["status"] = "resolved"
         open_inc["resolved_at"] = now_iso
         open_inc["last_observed_at"] = now_iso

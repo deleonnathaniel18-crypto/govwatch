@@ -118,16 +118,16 @@ function renderKpis() {
       icon: `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>`,
     },
     {
-      label: "CONFIRMED OFFLINE",
+      label: "UNAVAILABLE",
       value: s.unavailable,
       sub: "2+ consecutive failures",
       color: "var(--accent-red)",
       icon: `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
     },
     {
-      label: "WAF RESTRICTED",
+      label: "WAF / TLS RESTRICTED",
       value: s.monitoring_restricted,
-      sub: "Cloud-IP bot challenge",
+      sub: "Bot challenge or SSL 526",
       color: "var(--accent-violet)",
       icon: `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
     },
@@ -522,12 +522,13 @@ async function init() {
   updateClock();
   setInterval(updateClock, 1000);
 
+  const noCache = { cache: "no-store" };
   const [sourcesRes, statusRes, incidentsRes, datasetsRes, historyIndexRes] = await Promise.all([
-    fetch("/data/sources.json").then((r) => r.json()),
-    fetch("/data/status.json").then((r) => r.json()),
-    fetch("/data/incidents.json").then((r) => r.json()),
-    fetch("/data/datasets.json").then((r) => r.json()),
-    fetch("/data/history/index.json").then((r) => r.json()).catch(() => ({ months: [] })),
+    fetch("/data/sources.json", noCache).then((r) => r.json()),
+    fetch("/data/status.json", noCache).then((r) => r.json()),
+    fetch("/data/incidents.json", noCache).then((r) => r.json()),
+    fetch("/data/datasets.json", noCache).then((r) => r.json()),
+    fetch("/data/history/index.json", noCache).then((r) => r.json()).catch(() => ({ months: [] })),
   ]);
 
   state.sources = sourcesRes.sources;
@@ -536,7 +537,7 @@ async function init() {
   state.datasets = datasetsRes.datasets;
 
   if (historyIndexRes.months && historyIndexRes.months.length > 0) {
-    state.history = await fetch(`/data/history/daily-${historyIndexRes.months[0]}.json`)
+    state.history = await fetch(`/data/history/daily-${historyIndexRes.months[0]}.json`, noCache)
       .then((r) => r.json())
       .catch(() => null);
   }
