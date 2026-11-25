@@ -69,7 +69,7 @@ code {
     display: block;
   }
 
-  .topbar {
+  .app-shell .topbar {
     position: fixed;
     top: 0;
     left: 0;
