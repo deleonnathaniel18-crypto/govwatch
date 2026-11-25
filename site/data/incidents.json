@@ -7,9 +7,9 @@
       "status": "open",
       "severity": "unavailable",
       "first_detected_at": "2026-11-25T19:21:17Z",
-      "last_observed_at": "2026-11-25T19:23:03Z",
+      "last_observed_at": "2026-11-25T19:32:18Z",
       "resolved_at": null,
-      "consecutive_failures_peak": 3,
+      "consecutive_failures_peak": 4,
       "evidence": {
         "observed_http_statuses": []
       }
@@ -17,11 +17,11 @@
     {
       "id": "inc-dbm-main-portal-20261125T191654Z",
       "source_id": "dbm-main-portal",
-      "status": "open",
+      "status": "resolved",
       "severity": "unavailable",
       "first_detected_at": "2026-11-25T19:16:54Z",
-      "last_observed_at": "2026-11-25T19:23:03Z",
-      "resolved_at": null,
+      "last_observed_at": "2026-11-25T19:32:18Z",
+      "resolved_at": "2026-11-25T19:32:18Z",
       "consecutive_failures_peak": 4,
       "evidence": {
         "observed_http_statuses": [
