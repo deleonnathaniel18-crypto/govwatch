@@ -160,7 +160,11 @@ def perform_relay_check(
     req = urllib.request.Request(
         full_url,
         method="GET",
-        headers={"X-Probe-Key": relay_key, "Accept": "application/json"},
+        headers={
+            "User-Agent": USER_AGENT,
+            "X-Probe-Key": relay_key,
+            "Accept": "application/json",
+        },
     )
     try:
         with urllib.request.urlopen(req, timeout=max(timeout, 20)) as resp:
@@ -482,6 +486,7 @@ def run_monitoring() -> None:
                 expected_statuses=src.get("expected_status", [200]),
             )
             if result["http_status"] is None and str(result.get("error", "")).startswith("Relay "):
+                print(f"[relay-fallback] {sid}: {result.get('error')}")
                 result = perform_http_check(
                     url=url,
                     method=src.get("check_method", "HEAD"),
