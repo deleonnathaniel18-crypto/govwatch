@@ -26,6 +26,9 @@ class TestMonitor(unittest.TestCase):
         )
         self.assertTrue(monitor.detect_waf_block(403, {"cf-mitigated": "challenge"}, ""))
         self.assertFalse(monitor.detect_waf_block(503, {"Server": "nginx"}, "Service Unavailable"))
+        self.assertFalse(
+            monitor.detect_waf_block(503, {"Server": "cloudflare", "CF-RAY": "abc"}, "Service Unavailable")
+        )
 
     def test_incident_state_machine(self):
         data = {"incidents": []}

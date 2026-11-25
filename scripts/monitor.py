@@ -48,14 +48,19 @@ def is_valid_govph_url(url: str) -> bool:
 
 
 def detect_waf_block(status_code: int, headers: dict[str, str], snippet: str) -> bool:
-    """Detect common Cloudflare/Imperva WAF challenge responses."""
+    """Detect Cloudflare/Imperva WAF challenges without masking real 503 origin outages."""
     lowered_headers = {k.lower(): v.lower() for k, v in headers.items()}
-    if "cf-mitigated" in lowered_headers:
+    if "challenge" in lowered_headers.get("cf-mitigated", ""):
         return True
-    if status_code in (403, 429, 503):
+    if status_code in (403, 429):
         server = lowered_headers.get("server", "")
         lowered_body = snippet.lower()
-        if "cloudflare" in server and ("just a moment" in lowered_body or "cf-ray" in lowered_headers):
+        if "cloudflare" in server and (
+            "just a moment" in lowered_body
+            or "attention required" in lowered_body
+            or "cf-chl" in lowered_body
+            or "cf-ray" in lowered_headers
+        ):
             return True
         if "incapsula" in lowered_body or "x-iinfo" in lowered_headers:
             return True
@@ -98,7 +103,15 @@ def perform_http_check(
 
     for attempt in range(attempts):
         start = time.monotonic()
-        req = urllib.request.Request(url, method=method, headers={"User-Agent": USER_AGENT})
+        req = urllib.request.Request(
+            url,
+            method=method,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept": "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9",
+            },
+        )
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 latency_ms = round((time.monotonic() - start) * 1000)
@@ -128,7 +141,7 @@ def perform_http_check(
             except Exception:
                 pass
 
-            if exc.code == 405 and method == "HEAD":
+            if exc.code in (400, 403, 405) and method == "HEAD":
                 return perform_http_check(url, "GET", timeout, expected_statuses)
 
             if detect_waf_block(exc.code, headers, snippet):
@@ -370,6 +383,7 @@ def run_monitoring() -> None:
             "last_failed_at": now_iso if new_status in ("experiencing_issues", "unavailable") else prev.get("last_failed_at"),
             "http_status": result["http_status"],
             "response_time_ms": result["response_time_ms"],
+            "last_error": result["error"],
             "consecutive_failures": consecutive_failures,
             "uptime_30d_pct": uptime_pct,
             "uptime_30d_sample_count": sample_count,

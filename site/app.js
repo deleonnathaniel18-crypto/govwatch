@@ -431,9 +431,11 @@ function openSourceDetail(sourceId, push = true) {
     <div class="detail-row"><span>Official URL</span><a href="${src.url}" target="_blank" rel="noopener noreferrer">${src.url}</a></div>
     <div class="detail-row"><span>Category</span><span>${CATEGORY_LABELS[src.category] || src.category}</span></div>
     <div class="detail-row"><span>Check Method</span><code>${src.check_method}</code></div>
+    <div class="detail-row"><span>HTTP / Evidence</span><code>${st.http_status ?? "—"}${st.last_error ? ` (${st.last_error})` : ""}</code></div>
     <div class="detail-row"><span>Last Checked</span><span>${formatTime(st.last_checked_at)}</span></div>
     <div class="detail-row"><span>Last Successful</span><span>${formatTime(st.last_successful_at)}</span></div>
-    <div class="detail-row"><span>30D Availability</span><span>${st.uptime_30d_pct !== null && st.uptime_30d_pct !== undefined ? st.uptime_30d_pct + "%" : "Pending observations"}</span></div>
+    <div class="detail-row"><span>30D Availability</span><span>${st.uptime_30d_pct !== null && st.uptime_30d_pct !== undefined ? `${st.uptime_30d_pct}% (${st.uptime_30d_sample_count ?? 0} valid checks)` : "Pending observations"}</span></div>
+    <div class="detail-row"><span>Runner Scope</span><span>Checked from GitHub Actions (cloud IP). Geo-blocks or WAFs may differ from PH browsers.</span></div>
     <div class="detail-row"><span>Notes</span><span>${src.notes}</span></div>
   `;
   document.getElementById("detailModal").hidden = false;
