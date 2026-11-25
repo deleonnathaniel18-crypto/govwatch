@@ -7,11 +7,13 @@
       "status": "open",
       "severity": "unavailable",
       "first_detected_at": "2026-11-25T19:21:17Z",
-      "last_observed_at": "2026-11-25T19:46:54Z",
+      "last_observed_at": "2026-11-25T20:48:35Z",
       "resolved_at": null,
-      "consecutive_failures_peak": 6,
+      "consecutive_failures_peak": 7,
       "evidence": {
-        "observed_http_statuses": []
+        "observed_http_statuses": [
+          526
+        ]
       }
     },
     {
