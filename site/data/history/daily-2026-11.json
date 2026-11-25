@@ -4,9 +4,9 @@
   "sources": {
     "psa-openstat-api": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 7,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 0,
         "avg_latency_ms": 673
@@ -14,9 +14,9 @@
     },
     "psa-openstat-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 32
@@ -24,9 +24,9 @@
     },
     "psa-main-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 37
@@ -34,9 +34,9 @@
     },
     "data-gov-ph-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 7,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 0,
         "avg_latency_ms": 1356
@@ -44,9 +44,9 @@
     },
     "data-gov-ph-ckan-api": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 7,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 0,
         "avg_latency_ms": 1286
@@ -54,9 +54,9 @@
     },
     "philgeps-open-data": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 7,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 0,
         "avg_latency_ms": 997
@@ -74,9 +74,9 @@
     },
     "coa-main-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 48
@@ -84,9 +84,9 @@
     },
     "dof-main-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 3,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 4,
         "avg_latency_ms": 237
@@ -94,9 +94,9 @@
     },
     "dict-main-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 50
@@ -104,9 +104,9 @@
     },
     "official-gazette": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 35
@@ -114,9 +114,9 @@
     },
     "foi-portal": {
       "2026-11-25": {
-        "checks": 7,
+        "checks": 8,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 7,
         "avg_latency_ms": 38
@@ -124,9 +124,9 @@
     },
     "senate-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 6,
         "avg_latency_ms": 37
@@ -134,9 +134,9 @@
     },
     "house-congress-portal": {
       "2026-11-25": {
-        "checks": 6,
+        "checks": 7,
         "success": 0,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 6,
         "avg_latency_ms": 253
