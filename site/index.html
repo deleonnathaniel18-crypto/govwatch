@@ -72,7 +72,7 @@
           <span class="alert-icon">●</span>
           <div>
             <strong id="alertTitle">Awaiting First Monitoring Run</strong>
-            <span id="lastUpdatedText">12 curated .gov.ph endpoints registered. Run the scheduled GitHub Actions workflow to begin collecting observations.</span>
+            <span id="lastUpdatedText">Curated .gov.ph endpoints registered. Run the workflow to begin collecting checks.</span>
           </div>
         </div>
         <button class="btn-ghost" data-jump="methodology">Methodology</button>
@@ -91,7 +91,7 @@
               </div>
               <button class="btn-ghost" id="viewAllSourcesBtn" data-jump="directory">View all (15)</button>
             </div>
-            <div class="matrix-table-wrap">
+            <div class="matrix-table-wrap desktop-only">
               <table class="matrix-table">
                 <thead>
                   <tr>
@@ -108,6 +108,7 @@
                 <tbody id="overviewMatrixBody"></tbody>
               </table>
             </div>
+            <div id="overviewMobileAccordion" class="mobile-accordion mobile-only"></div>
           </section>
 
           <section class="hud-panel">

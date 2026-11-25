@@ -150,6 +150,8 @@ function renderKpis() {
 
 function renderOverviewMatrix() {
   const tbody = document.getElementById("overviewMatrixBody");
+  const mobileAcc = document.getElementById("overviewMobileAccordion");
+
   tbody.innerHTML = state.sources
     .map((src) => {
       const st = state.status.sources[src.id] || {};
@@ -172,6 +174,37 @@ function renderOverviewMatrix() {
         </tr>`;
     })
     .join("");
+
+  if (mobileAcc) {
+    mobileAcc.innerHTML = state.sources
+      .map((src) => {
+        const st = state.status.sources[src.id] || {};
+        const httpCode = st.http_status ?? "—";
+        const latency = st.response_time_ms !== null && st.response_time_ms !== undefined ? `${st.response_time_ms} ms` : "—";
+        const uptime = st.uptime_30d_pct !== null && st.uptime_30d_pct !== undefined ? `${st.uptime_30d_pct}% (${st.uptime_30d_sample_count ?? 0})` : "Pending";
+        return `
+          <details class="acc-item">
+            <summary class="acc-summary">
+              <div class="acc-title-wrap">
+                <div class="acc-title">${src.name}</div>
+                <div class="acc-sub">${src.agency_abbr} &middot; ${CATEGORY_LABELS[src.category] || src.category}</div>
+              </div>
+              <div class="acc-right">
+                ${chipHtml(st.status)}
+                <span class="acc-chevron" aria-hidden="true">▾</span>
+              </div>
+            </summary>
+            <div class="acc-body">
+              <div class="acc-kv"><span>Method</span><code>${src.check_method}</code></div>
+              <div class="acc-kv"><span>HTTP / Evidence</span><code>${httpCode}${st.last_error ? ` (${st.last_error})` : ""}</code></div>
+              <div class="acc-kv"><span>Latency</span><span>${latency}</span></div>
+              <div class="acc-kv"><span>30d Uptime</span><span>${uptime}</span></div>
+              <button class="btn-ghost acc-detail-btn" data-source-id="${src.id}">View Full Details &rarr;</button>
+            </div>
+          </details>`;
+      })
+      .join("");
+  }
 }
 
 function renderOverviewTelemetry() {
