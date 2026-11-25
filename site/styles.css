@@ -494,13 +494,32 @@ main.container {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
   gap: 0.9rem;
-  align-items: start;
+  align-items: stretch;
 }
 
-.col-main, .col-side {
+.side-stack {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  min-width: 0;
+}
+
+.panel-grow, .panel-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-grow {
+  flex: 1;
+}
+
+.panel-grow .mini-stats-row {
+  margin-top: auto;
+}
+
+.panel-col .telemetry-bars-box {
+  flex: 1;
 }
 
 .hud-panel {

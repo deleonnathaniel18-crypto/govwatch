@@ -49,7 +49,6 @@
     <section id="view-overview" class="view active">
       <div class="hud-header">
         <div>
-          <div class="eyebrow">Philippine Government Information Observatory</div>
           <div class="title-row">
             <h1>Reliability Overview</h1>
             <span class="shift-tag" id="lastSyncTag">Awaiting first run</span>
@@ -64,50 +63,37 @@
       <div class="kpi-grid" id="kpiGrid"></div>
 
       <div class="command-grid">
-        <!-- LEFT COLUMN -->
-        <div class="col-main">
-          <section class="hud-panel">
-            <div class="panel-head">
-              <div>
-                <div class="eyebrow">Monitored Endpoints</div>
-                <h2>Source Status Summary</h2>
-              </div>
-              <button class="btn-ghost" id="viewAllSourcesBtn" data-jump="directory">View all (15)</button>
+        <!-- ROW 1 LEFT -->
+        <section class="hud-panel">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">Monitored Endpoints</div>
+              <h2>Source Status Summary</h2>
             </div>
-            <div class="matrix-table-wrap desktop-only">
-              <table class="matrix-table">
-                <thead>
-                  <tr>
-                    <th>Source / Agency</th>
-                    <th>Status</th>
-                    <th>Type</th>
-                    <th>Method</th>
-                    <th>HTTP</th>
-                    <th>Latency</th>
-                    <th>30d Uptime</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="overviewMatrixBody"></tbody>
-              </table>
-            </div>
-            <div id="overviewMobileAccordion" class="mobile-accordion mobile-only"></div>
-          </section>
+            <button class="btn-ghost" id="viewAllSourcesBtn" data-jump="directory">View all (15)</button>
+          </div>
+          <div class="matrix-table-wrap desktop-only">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Source / Agency</th>
+                  <th>Status</th>
+                  <th>Type</th>
+                  <th>Method</th>
+                  <th>HTTP</th>
+                  <th>Latency</th>
+                  <th>30d Uptime</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="overviewMatrixBody"></tbody>
+            </table>
+          </div>
+          <div id="overviewMobileAccordion" class="mobile-accordion mobile-only"></div>
+        </section>
 
-          <section class="hud-panel">
-            <div class="panel-head">
-              <div>
-                <div class="eyebrow">Observation History</div>
-                <h2>30-Day Availability Timeline</h2>
-              </div>
-              <span class="eyebrow" id="historyMonthLabel">No samples yet</span>
-            </div>
-            <div id="overviewTelemetryChart" class="telemetry-bars-box"></div>
-          </section>
-        </div>
-
-        <!-- RIGHT COLUMN -->
-        <div class="col-side">
+        <!-- ROW 1 RIGHT -->
+        <div class="side-stack">
           <section class="hud-panel">
             <div class="panel-head">
               <div>
@@ -119,7 +105,7 @@
             <div id="watchDeskList"></div>
           </section>
 
-          <section class="hud-panel">
+          <section class="hud-panel panel-grow">
             <div class="panel-head">
               <div>
                 <div class="eyebrow">Registry Breakdown</div>
@@ -142,17 +128,30 @@
               </div>
             </div>
           </section>
-
-          <section class="hud-panel">
-            <div class="panel-head">
-              <div>
-                <div class="eyebrow">Schedule-Verified</div>
-                <h2>Dataset Freshness</h2>
-              </div>
-            </div>
-            <div id="overviewDatasetList" class="watch-list"></div>
-          </section>
         </div>
+
+        <!-- ROW 2 LEFT -->
+        <section class="hud-panel panel-col">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">Observation History</div>
+              <h2>30-Day Availability Timeline</h2>
+            </div>
+            <span class="eyebrow" id="historyMonthLabel">No samples yet</span>
+          </div>
+          <div id="overviewTelemetryChart" class="telemetry-bars-box"></div>
+        </section>
+
+        <!-- ROW 2 RIGHT -->
+        <section class="hud-panel panel-col">
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">Schedule-Verified</div>
+              <h2>Dataset Freshness</h2>
+            </div>
+          </div>
+          <div id="overviewDatasetList" class="watch-list"></div>
+        </section>
       </div>
     </section>
 
