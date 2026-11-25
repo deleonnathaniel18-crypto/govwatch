@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOVSOURCE WATCH // Philippine Government Reliability Control</title>
+  <meta name="description" content="Independent civic technology observatory monitoring the accessibility, availability, and documented freshness of Philippine government information sources." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-group">
+        <div class="brand">
+          <div class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9" opacity="0.35"/>
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+            </svg>
+          </div>
+          <div>
+            <span class="brand-name">GOVSOURCE WATCH</span>
+            <span class="brand-sub">CIVIC TELEMETRY // v1.0</span>
+          </div>
+        </div>
+        <div class="sys-pill" id="sysPill">
+          <span class="pulse-dot" id="sysDot"></span>
+          <span id="sysPillText">PRE-MONITORING STANDBY</span>
+        </div>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="topbar-right" id="topbarRight">
+        <nav class="nav" id="mainNav" aria-label="Primary">
+          <button class="nav-btn active" data-view="overview">CONTROL</button>
+          <button class="nav-btn" data-view="directory">MATRIX</button>
+          <button class="nav-btn" data-view="history">TELEMETRY</button>
+          <button class="nav-btn" data-view="incidents">INCIDENTS</button>
+          <button class="nav-btn" data-view="methodology">METHODOLOGY</button>
+          <button class="nav-btn" data-view="about">ABOUT</button>
+        </nav>
+        <div class="clock-badge" id="clockBadge">UTC+8 // --:--</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- OVERVIEW / CONTROL -->
+    <section id="view-overview" class="view active">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">PH-GOV // RELIABILITY OBSERVATORY // FLEET OVERVIEW</div>
+          <div class="title-row">
+            <h1>INFRASTRUCTURE CONTROL</h1>
+            <span class="shift-tag" id="lastSyncTag">SYNC // AWAITING FIRST RUN</span>
+          </div>
+        </div>
+        <div class="hud-actions">
+          <div class="cadence-pill">CADENCE: 4H CRON</div>
+          <button class="btn-primary" data-jump="directory">INSPECT MATRIX &rarr;</button>
+        </div>
+      </div>
+
+      <div id="alertStrip" class="alert-strip standby">
+        <div class="alert-left">
+          <span class="alert-icon">◈</span>
+          <div>
+            <strong id="alertTitle">STANDBY // MONITORING ENGINE NOT YET ACTIVE</strong>
+            <span id="lastUpdatedText">12 curated .gov.ph endpoints registered. Run scheduled GitHub Actions workflow to populate live telemetry.</span>
+          </div>
+        </div>
+        <button class="btn-ghost" data-jump="methodology">READ PROTOCOL</button>
+      </div>
+
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <div class="command-grid">
+        <!-- LEFT COLUMN -->
+        <div class="col-main">
+          <section class="hud-panel">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">SOURCE MATRIX</div>
+                <h2>MONITORED GOVERNMENT ENDPOINTS</h2>
+              </div>
+              <button class="btn-ghost" data-jump="directory">FULL MATRIX (12)</button>
+            </div>
+            <div class="matrix-table-wrap">
+              <table class="matrix-table">
+                <thead>
+                  <tr>
+                    <th>SOURCE / AGENCY</th>
+                    <th>HEALTH</th>
+                    <th>TYPE</th>
+                    <th>METHOD</th>
+                    <th>HTTP</th>
+                    <th>LATENCY</th>
+                    <th>30D UPTIME</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="overviewMatrixBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="hud-panel">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">OBSERVATION TELEMETRY</div>
+                <h2>30-DAY AVAILABILITY PULSE</h2>
+              </div>
+              <span class="eyebrow" id="historyMonthLabel">NO SAMPLES YET</span>
+            </div>
+            <div id="overviewTelemetryChart" class="telemetry-bars-box"></div>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col-side">
+          <section class="hud-panel">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">ACTIVE INCIDENTS</div>
+                <h2>WATCH DESK</h2>
+              </div>
+              <span class="count-box" id="openIncidentsBadge">00 OPEN</span>
+            </div>
+            <div id="watchDeskList"></div>
+          </section>
+
+          <section class="hud-panel">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">COVERAGE ARRAY</div>
+                <h2>AGENCY &amp; DATASET REGISTRY</h2>
+              </div>
+            </div>
+            <div id="agencyArray" class="agency-array"></div>
+            <div class="mini-stats-row">
+              <div class="mini-stat">
+                <span class="mini-val" id="statSourcesCount">12</span>
+                <span class="mini-lbl">ENDPOINTS</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-val" id="statDatasetsCount">2</span>
+                <span class="mini-lbl">DATASETS</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-val">4H</span>
+                <span class="mini-lbl">INTERVAL</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="hud-panel">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">DATASET FRESHNESS</div>
+                <h2>SCHEDULED RELEASES</h2>
+              </div>
+            </div>
+            <div id="overviewDatasetList" class="watch-list"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECTORY / MATRIX -->
+    <section id="view-directory" class="view">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">SOURCE REGISTRY // FULL INVENTORY</div>
+          <h1>ENDPOINT MATRIX</h1>
+        </div>
+      </div>
+
+      <div class="filters-bar">
+        <input type="search" id="searchInput" class="search-input" placeholder="FILTER BY AGENCY, SOURCE NAME, OR .GOV.PH URL..." aria-label="Search sources" />
+        <select id="agencyFilter" class="select-input" aria-label="Filter by agency">
+          <option value="all">AGENCY: ALL</option>
+        </select>
+        <select id="categoryFilter" class="select-input" aria-label="Filter by category">
+          <option value="all">TYPE: ALL</option>
+        </select>
+        <select id="statusFilter" class="select-input" aria-label="Filter by status">
+          <option value="all">STATUS: ALL</option>
+        </select>
+      </div>
+
+      <div id="directoryGrid" class="source-grid"></div>
+    </section>
+
+    <!-- HISTORY / TELEMETRY -->
+    <section id="view-history" class="view">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">HISTORICAL ARCHIVE // DAILY ROLLUPS</div>
+          <h1>TELEMETRY LOGS</h1>
+        </div>
+      </div>
+      <div id="historyContainer">
+        <div class="empty-state">
+          <div class="empty-icon">◷</div>
+          <h3>NO HISTORICAL TELEMETRY RECORDED</h3>
+          <p>Daily availability rollups and average latencies will populate here automatically once the scheduled GitHub Actions monitor executes. No synthetic data is displayed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INCIDENTS -->
+    <section id="view-incidents" class="view">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">DISRUPTION LOG // MULTI-CHECK CONFIRMED</div>
+          <h1>INCIDENT ARCHIVE</h1>
+        </div>
+      </div>
+      <div id="incidentsContainer"></div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section id="view-methodology" class="view">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">PROTOCOL // TRUST BOUNDARIES</div>
+          <h1>MONITORING METHODOLOGY</h1>
+        </div>
+      </div>
+
+      <div class="prose-grid">
+        <article class="hud-panel">
+          <div class="eyebrow">PILLARS 01–05</div>
+          <h3>TRUST &amp; ACCURACY MODEL</h3>
+          <ul class="clean-list">
+            <li><strong>Availability:</strong> Can the runner reach the endpoint over HTTPS?</li>
+            <li><strong>Accessibility:</strong> Can the public resource or document be opened?</li>
+            <li><strong>Freshness:</strong> Did a dataset update per its <em>documented</em> release calendar?</li>
+            <li><strong>Change Detection:</strong> Did <code>ETag</code>, <code>Last-Modified</code>, or <code>SHA-256</code> change?</li>
+            <li><strong>Factual Accuracy:</strong> <em>Not verified.</em> HTTP 200 never proves content accuracy.</li>
+          </ul>
+        </article>
+
+        <article class="hud-panel">
+          <div class="eyebrow">TAXONOMY</div>
+          <h3>STATUS CLASSIFICATION</h3>
+          <ul class="clean-list">
+            <li><span class="status-chip chip-online">■ NOMINAL</span> Expected HTTP status within timeout.</li>
+            <li><span class="status-chip chip-issues">■ DEGRADED</span> Single-run failure or unexpected status; awaiting confirmation.</li>
+            <li><span class="status-chip chip-unavailable">■ OFFLINE</span> Confirmed across 2+ consecutive scheduled runs.</li>
+            <li><span class="status-chip chip-restricted">■ WAF BLOCKED</span> Edge WAF blocked cloud-IP automated checks.</li>
+            <li><span class="status-chip chip-neutral">■ STANDBY</span> Registered source awaiting initial observation.</li>
+          </ul>
+        </article>
+
+        <article class="hud-panel">
+          <div class="eyebrow">ETHICS &amp; SAFETY</div>
+          <h3>RESPONSIBLE PROBING</h3>
+          <p class="prose-p">GovSource Watch monitors public <code>.gov.ph</code> endpoints only. It respects <code>robots.txt</code>, enforces 2-second per-domain delays, never crawls recursively, never bypasses WAFs or authentication, and never stores HTML response bodies.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="view-about" class="view">
+      <div class="hud-header">
+        <div>
+          <div class="eyebrow">PROJECT CHARTER // OPEN SOURCE</div>
+          <h1>ABOUT GOVSOURCE WATCH</h1>
+        </div>
+      </div>
+      <div class="prose-grid">
+        <article class="hud-panel">
+          <div class="eyebrow">DISCLAIMER</div>
+          <h3>INDEPENDENT OBSERVATORY</h3>
+          <p class="prose-p">GovSource Watch is an independent open-source civic technology project. It is not affiliated with, endorsed by, or an official representative of any Philippine government agency.</p>
+        </article>
+        <article class="hud-panel">
+          <div class="eyebrow">ECOSYSTEM ROLE</div>
+          <h3>COMPLEMENTING BETTERGOVPH</h3>
+          <p class="prose-p">While portals like BetterGovPH help citizens explore and query public datasets, GovSource Watch monitors the <strong>upstream `.gov.ph` origin servers</strong> to track availability, link rot, and documented update schedules.</p>
+        </article>
+        <article class="hud-panel">
+          <div class="eyebrow">INFRASTRUCTURE</div>
+          <h3>ZERO-COST ARCHITECTURE</h3>
+          <p class="prose-p">Licensed under MIT. Powered by static JSON, scheduled GitHub Actions, and Cloudflare Pages Free—with zero paid databases or external AI APIs.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- SOURCE DETAIL MODAL -->
+  <div id="detailModal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div>
+          <div id="modalAgency" class="eyebrow"></div>
+          <h2 id="modalTitle"></h2>
+        </div>
+        <button id="closeModal" class="icon-btn" aria-label="Close details">&times;</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>GOVSOURCE WATCH // INDEPENDENT CIVIC RELIABILITY OBSERVATORY</span>
+      <span>MIT LICENSE // STATIC TELEMETRY ARCHITECTURE</span>
+    </div>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

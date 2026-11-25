@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "datasets": [
+    {
+      "id": "psa-monthly-cpi",
+      "title": "Consumer Price Index & Headline Inflation (2018=100)",
+      "agency": "Philippine Statistics Authority",
+      "agency_abbr": "PSA",
+      "source_url": "https://psa.gov.ph",
+      "expected_frequency": "monthly",
+      "schedule_documented": true,
+      "schedule_source_url": "https://psa.gov.ph",
+      "grace_period_days": 3,
+      "last_verified_at": null,
+      "last_observed_modified": null,
+      "freshness_status": "not_yet_checked"
+    },
+    {
+      "id": "philgeps-ocds-procurement",
+      "title": "PhilGEPS Open Contracting Procurement Records",
+      "agency": "Government Procurement Policy Board / PhilGEPS",
+      "agency_abbr": "PhilGEPS",
+      "source_url": "https://open.philgeps.gov.ph",
+      "expected_frequency": "unknown",
+      "schedule_documented": false,
+      "schedule_source_url": null,
+      "grace_period_days": null,
+      "last_verified_at": null,
+      "last_observed_modified": null,
+      "freshness_status": "not_yet_checked"
+    }
+  ]
+}
