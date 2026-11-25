@@ -42,13 +42,83 @@ code {
   color: var(--accent-cyan);
 }
 
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .container {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1360px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 981px) {
+  .app-shell {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-bottom: none;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .topbar-inner {
+    height: 100%;
+    max-width: none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .brand-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .topbar-right {
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .nav-btn {
+    text-align: left;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .clock-badge {
+    text-align: center;
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
 }
 
 main.container {
