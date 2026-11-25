@@ -11,11 +11,13 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import urllib.robotparser
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -76,7 +78,7 @@ def check_robots_allowed(url: str, cache: dict[str, urllib.robotparser.RobotFile
         robots_url = f"{origin}/robots.txt"
         try:
             req = urllib.request.Request(robots_url, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=10) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 content = resp.read(65536).decode("utf-8", errors="replace")
             rp.parse(content.splitlines())
             cache[origin] = rp
@@ -224,9 +226,11 @@ def perform_http_check(
     method: str,
     timeout: int,
     expected_statuses: list[int],
+    retries: int = len(RETRY_BACKOFFS),
+    allow_head_fallback: bool = True,
 ) -> dict[str, Any]:
     """Execute a single HTTP check with retries and WAF detection."""
-    attempts = 1 + len(RETRY_BACKOFFS)
+    attempts = 1 + retries
     last_error: str | None = None
 
     for attempt in range(attempts):
@@ -269,8 +273,10 @@ def perform_http_check(
             except Exception:
                 pass
 
-            if exc.code in (400, 403, 405) and method == "HEAD":
-                return perform_http_check(url, "GET", timeout, expected_statuses)
+            if exc.code in (400, 403, 405) and method == "HEAD" and allow_head_fallback:
+                return perform_http_check(
+                    url, "GET", timeout, expected_statuses, retries=0, allow_head_fallback=False
+                )
 
             if detect_waf_block(exc.code, headers, snippet):
                 return {
@@ -304,11 +310,13 @@ def perform_http_check(
             msg = str(exc).strip()
             last_error = f"{type(exc).__name__}: {msg}" if msg else type(exc).__name__
 
-        if attempt < len(RETRY_BACKOFFS):
+        if attempt < retries:
             time.sleep(RETRY_BACKOFFS[attempt])
 
-    if method == "HEAD":
-        return perform_http_check(url, "GET", max(timeout, 25), expected_statuses)
+    if method == "HEAD" and allow_head_fallback:
+        return perform_http_check(
+            url, "GET", min(timeout, 12), expected_statuses, retries=0, allow_head_fallback=False
+        )
 
     return {
         "outcome": "issues",
@@ -453,50 +461,28 @@ def run_monitoring() -> None:
     today_str = utc_today()
     robots_cache: dict[str, urllib.robotparser.RobotFileParser | None] = {}
     last_domain_hit: dict[str, float] = {}
+    domain_lock = threading.Lock()
+    robots_lock = threading.Lock()
+    relay_url = os.environ.get("PROBE_RELAY_URL", "").strip()
+    relay_key = os.environ.get("PROBE_RELAY_KEY", "").strip()
 
-    summary = {
-        "total_monitored": 0,
-        "online": 0,
-        "experiencing_issues": 0,
-        "unavailable": 0,
-        "monitoring_restricted": 0,
-        "not_yet_checked": 0,
-        "monitoring_suspended": 0,
-    }
-
-    for src in sources_cfg["sources"]:
+    def probe_source(src: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         sid = src["id"]
         url = src["url"]
-        summary["total_monitored"] += 1
-
-        prev = status_data["sources"].get(sid, {})
         if not src.get("monitoring_enabled", True) or not is_valid_govph_url(url):
-            status_data["sources"][sid] = {
-                **prev,
-                "status": "monitoring_suspended",
-                "last_checked_at": now_iso,
-                "last_error": src.get("notes") or "Monitoring disabled in registry",
-            }
-            summary["monitoring_suspended"] += 1
-            continue
+            return sid, {"suspended": True, "reason": src.get("notes") or "Monitoring disabled in registry"}
 
-        if not check_robots_allowed(url, robots_cache):
-            status_data["sources"][sid] = {
-                **prev,
-                "status": "monitoring_suspended",
-                "last_checked_at": now_iso,
-                "last_error": "Disallowed by robots.txt",
-            }
-            summary["monitoring_suspended"] += 1
-            continue
+        with robots_lock:
+            allowed = check_robots_allowed(url, robots_cache)
+        if not allowed:
+            return sid, {"suspended": True, "reason": "Disallowed by robots.txt"}
 
         domain = urllib.parse.urlparse(url).netloc.lower()
-        elapsed = time.monotonic() - last_domain_hit.get(domain, 0.0)
-        if domain in last_domain_hit and elapsed < DOMAIN_DELAY_SECONDS:
-            time.sleep(DOMAIN_DELAY_SECONDS - elapsed)
-
-        relay_url = os.environ.get("PROBE_RELAY_URL", "").strip()
-        relay_key = os.environ.get("PROBE_RELAY_KEY", "").strip()
+        with domain_lock:
+            elapsed = time.monotonic() - last_domain_hit.get(domain, 0.0)
+            if domain in last_domain_hit and elapsed < DOMAIN_DELAY_SECONDS:
+                time.sleep(DOMAIN_DELAY_SECONDS - elapsed)
+            last_domain_hit[domain] = time.monotonic()
 
         if relay_url and relay_key:
             result = perform_relay_check(
@@ -522,7 +508,38 @@ def run_monitoring() -> None:
                 timeout=src.get("timeout_seconds", 15),
                 expected_statuses=src.get("expected_status", [200]),
             )
-        last_domain_hit[domain] = time.monotonic()
+        return sid, {"suspended": False, "result": result}
+
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        probe_results = dict(pool.map(probe_source, sources_cfg["sources"]))
+
+    summary = {
+        "total_monitored": 0,
+        "online": 0,
+        "experiencing_issues": 0,
+        "unavailable": 0,
+        "monitoring_restricted": 0,
+        "not_yet_checked": 0,
+        "monitoring_suspended": 0,
+    }
+
+    for src in sources_cfg["sources"]:
+        sid = src["id"]
+        summary["total_monitored"] += 1
+        prev = status_data["sources"].get(sid, {})
+        probe = probe_results[sid]
+
+        if probe["suspended"]:
+            status_data["sources"][sid] = {
+                **prev,
+                "status": "monitoring_suspended",
+                "last_checked_at": now_iso,
+                "last_error": probe["reason"],
+            }
+            summary["monitoring_suspended"] += 1
+            continue
+
+        result = probe["result"]
 
         outcome = result["outcome"]
         prev_failures = prev.get("consecutive_failures", 0)
