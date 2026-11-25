@@ -118,8 +118,8 @@
       "expected_update_frequency": null,
       "schedule_evidence_url": null,
       "robots_txt_checked": false,
-      "monitoring_enabled": true,
-      "notes": "Official portal for NEP, GAA, and Budget Circulars. Requires live WAF validation."
+      "monitoring_enabled": false,
+      "notes": "Suspended: drops packets from GitHub Actions US cloud IPs despite being reachable from PH browsers."
     },
     {
       "id": "coa-main-portal",
@@ -254,8 +254,8 @@
       "expected_update_frequency": null,
       "schedule_evidence_url": null,
       "robots_txt_checked": false,
-      "monitoring_enabled": true,
-      "notes": "Official portal for Supreme Court decisions, issuances, and judiciary announcements."
+      "monitoring_enabled": false,
+      "notes": "Suspended: times out from GitHub Actions US cloud IPs despite being reachable from PH browsers."
     },
     {
       "id": "bsp-main-portal",
