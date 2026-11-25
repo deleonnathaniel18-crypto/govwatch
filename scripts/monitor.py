@@ -338,7 +338,12 @@ def run_monitoring() -> None:
             continue
 
         if not check_robots_allowed(url, robots_cache):
-            status_data["sources"][sid] = {**prev, "status": "monitoring_suspended"}
+            status_data["sources"][sid] = {
+                **prev,
+                "status": "monitoring_suspended",
+                "last_checked_at": now_iso,
+                "last_error": "Disallowed by robots.txt",
+            }
             summary["monitoring_suspended"] += 1
             continue
 
