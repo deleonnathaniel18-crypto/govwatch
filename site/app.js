@@ -148,11 +148,28 @@ function renderKpis() {
     .join("");
 }
 
+const OVERVIEW_STATUS_PRIORITY = {
+  unavailable: 0,
+  experiencing_issues: 1,
+  online: 2,
+  monitoring_restricted: 3,
+  monitoring_suspended: 4,
+  not_yet_checked: 5,
+};
+
 function renderOverviewMatrix() {
   const tbody = document.getElementById("overviewMatrixBody");
   const mobileAcc = document.getElementById("overviewMobileAccordion");
 
-  tbody.innerHTML = state.sources
+  const previewSources = [...state.sources]
+    .sort((a, b) => {
+      const sa = state.status.sources[a.id]?.status || "not_yet_checked";
+      const sb = state.status.sources[b.id]?.status || "not_yet_checked";
+      return (OVERVIEW_STATUS_PRIORITY[sa] ?? 9) - (OVERVIEW_STATUS_PRIORITY[sb] ?? 9);
+    })
+    .slice(0, 8);
+
+  tbody.innerHTML = previewSources
     .map((src) => {
       const st = state.status.sources[src.id] || {};
       const httpCode = st.http_status ?? "—";
@@ -176,7 +193,7 @@ function renderOverviewMatrix() {
     .join("");
 
   if (mobileAcc) {
-    mobileAcc.innerHTML = state.sources
+    mobileAcc.innerHTML = previewSources
       .map((src) => {
         const st = state.status.sources[src.id] || {};
         const httpCode = st.http_status ?? "—";
