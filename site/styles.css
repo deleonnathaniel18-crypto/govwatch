@@ -107,9 +107,16 @@ code {
   }
 
   .nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     text-align: left;
-    padding: 0.55rem 0.75rem;
-    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.94rem;
   }
 
   .clock-badge {
@@ -159,15 +166,12 @@ main.container {
   gap: 0.65rem;
 }
 
-.brand-emblem {
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(52, 211, 153, 0.35);
-  background: rgba(52, 211, 153, 0.08);
-  color: var(--accent-mint);
-  border-radius: 4px;
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
 }
 
 .brand-name {

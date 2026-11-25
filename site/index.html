@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GOVSOURCE WATCH // Philippine Government Reliability Control</title>
+  <title>GovStatus // Philippine Government Reliability Monitor</title>
   <meta name="description" content="Independent civic technology observatory monitoring the accessibility, availability, and documented freshness of Philippine government information sources." />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -16,20 +17,11 @@
     <div class="topbar-inner">
       <div class="brand-group">
         <div class="brand">
-          <div class="brand-emblem" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="9" opacity="0.35"/>
-              <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
-            </svg>
-          </div>
+          <img src="/assets/logo.png" alt="GovStatus logo" class="brand-logo" />
           <div>
-            <span class="brand-name">GovSource Watch</span>
-            <span class="brand-sub">PH Government Reliability Monitor</span>
+            <span class="brand-name">GovStatus</span>
+            <span class="brand-sub">PH Government Reliability</span>
           </div>
-        </div>
-        <div class="sys-pill" id="sysPill">
-          <span class="pulse-dot" id="sysDot"></span>
-          <span id="sysPillText">Standby</span>
         </div>
       </div>
 
@@ -67,17 +59,6 @@
           <div class="cadence-pill">Checks every 4h</div>
           <button class="btn-primary" data-jump="directory">Browse Sources &rarr;</button>
         </div>
-      </div>
-
-      <div id="alertStrip" class="alert-strip standby">
-        <div class="alert-left">
-          <span class="alert-icon">●</span>
-          <div>
-            <strong id="alertTitle">Awaiting First Monitoring Run</strong>
-            <span id="lastUpdatedText">Curated .gov.ph endpoints registered. Run the workflow to begin collecting checks.</span>
-          </div>
-        </div>
-        <button class="btn-ghost" data-jump="methodology">Methodology</button>
       </div>
 
       <div class="kpi-grid" id="kpiGrid"></div>
@@ -275,19 +256,19 @@
       <div class="hud-header">
         <div>
           <div class="eyebrow">Open Source</div>
-          <h1>About GovSource Watch</h1>
+          <h1>About GovStatus</h1>
         </div>
       </div>
       <div class="prose-grid">
         <article class="hud-panel">
           <div class="eyebrow">Disclaimer</div>
           <h3>Independent Observatory</h3>
-          <p class="prose-p">GovSource Watch is an independent open-source civic technology project. It is not affiliated with, endorsed by, or an official representative of any Philippine government agency.</p>
+          <p class="prose-p">GovStatus is an independent open-source civic technology project. It is not affiliated with, endorsed by, or an official representative of any Philippine government agency.</p>
         </article>
         <article class="hud-panel">
           <div class="eyebrow">Ecosystem</div>
           <h3>Complementing BetterGovPH</h3>
-          <p class="prose-p">While portals like BetterGovPH help citizens explore and query public datasets, GovSource Watch monitors the <strong>upstream <code>.gov.ph</code> origin servers</strong> to track availability, link rot, and documented update schedules.</p>
+          <p class="prose-p">While portals like BetterGovPH help citizens explore and query public datasets, GovStatus monitors the <strong>upstream <code>.gov.ph</code> origin servers</strong> to track availability, link rot, and documented update schedules.</p>
         </article>
         <article class="hud-panel">
           <div class="eyebrow">Infrastructure</div>
@@ -314,7 +295,7 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <span>GOVSOURCE WATCH // INDEPENDENT CIVIC RELIABILITY OBSERVATORY</span>
+      <span>GOVSTATUS // INDEPENDENT CIVIC RELIABILITY OBSERVATORY</span>
       <span>MIT LICENSE // STATIC TELEMETRY ARCHITECTURE</span>
     </div>
   </footer>

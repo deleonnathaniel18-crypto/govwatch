@@ -543,14 +543,7 @@ async function init() {
   }
 
   if (state.status.monitoring_active && state.status.generated_at) {
-    document.getElementById("sysPill").classList.add("live");
-    document.getElementById("sysPillText").textContent = "Monitoring Active";
     document.getElementById("lastSyncTag").textContent = `Last run: ${formatTime(state.status.generated_at)}`;
-    const strip = document.getElementById("alertStrip");
-    strip.classList.remove("standby");
-    strip.classList.add("active");
-    document.getElementById("alertTitle").textContent = "Monitoring Active";
-    document.getElementById("lastUpdatedText").textContent = `Last completed check: ${formatTime(state.status.generated_at)}`;
   }
 
   populateFilters();
