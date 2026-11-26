@@ -2,6 +2,19 @@
   "schema_version": "1.0",
   "incidents": [
     {
+      "id": "inc-pagasa-wis2-api-20261126T092938Z",
+      "source_id": "pagasa-wis2-api",
+      "status": "open",
+      "severity": "unavailable",
+      "first_detected_at": "2026-11-26T09:29:38Z",
+      "last_observed_at": "2026-11-26T09:29:38Z",
+      "resolved_at": null,
+      "consecutive_failures_peak": 2,
+      "evidence": {
+        "observed_http_statuses": []
+      }
+    },
+    {
       "id": "inc-supreme-court-portal-20261125T192117Z",
       "source_id": "supreme-court-portal",
       "status": "resolved",
