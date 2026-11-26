@@ -12,12 +12,12 @@
         "avg_latency_ms": 729
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 604
+        "avg_latency_ms": 607
       }
     },
     "psa-openstat-portal": {
@@ -30,11 +30,11 @@
         "avg_latency_ms": 22
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
+        "restricted": 2,
         "avg_latency_ms": 2
       }
     },
@@ -48,12 +48,12 @@
         "avg_latency_ms": 24
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 3
+        "restricted": 2,
+        "avg_latency_ms": 2
       }
     },
     "data-gov-ph-portal": {
@@ -66,12 +66,12 @@
         "avg_latency_ms": 1373
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1908
+        "avg_latency_ms": 1795
       }
     },
     "data-gov-ph-ckan-api": {
@@ -84,12 +84,12 @@
         "avg_latency_ms": 1239
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1572
+        "avg_latency_ms": 1623
       }
     },
     "philgeps-open-data": {
@@ -102,12 +102,12 @@
         "avg_latency_ms": 1156
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1335
+        "avg_latency_ms": 1312
       }
     },
     "dbm-main-portal": {
@@ -120,12 +120,12 @@
         "avg_latency_ms": 1281
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1757
+        "avg_latency_ms": 2112
       }
     },
     "coa-main-portal": {
@@ -138,12 +138,12 @@
         "avg_latency_ms": 427
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 0,
+        "checks": 2,
+        "success": 1,
         "issues": 0,
         "unavailable": 0,
         "restricted": 1,
-        "avg_latency_ms": 72
+        "avg_latency_ms": 1808
       }
     },
     "dof-main-portal": {
@@ -156,12 +156,12 @@
         "avg_latency_ms": 432
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 616
+        "avg_latency_ms": 432
       }
     },
     "dict-main-portal": {
@@ -174,11 +174,11 @@
         "avg_latency_ms": 33
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
+        "restricted": 2,
         "avg_latency_ms": 2
       }
     },
@@ -192,12 +192,12 @@
         "avg_latency_ms": 24
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 1
+        "restricted": 2,
+        "avg_latency_ms": 2
       }
     },
     "foi-portal": {
@@ -210,11 +210,11 @@
         "avg_latency_ms": 24
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
+        "restricted": 2,
         "avg_latency_ms": 2
       }
     },
@@ -228,12 +228,12 @@
         "avg_latency_ms": 415
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 67
+        "restricted": 2,
+        "avg_latency_ms": 34
       }
     },
     "house-congress-portal": {
@@ -246,11 +246,11 @@
         "avg_latency_ms": 158
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
+        "restricted": 2,
         "avg_latency_ms": 2
       }
     },
@@ -264,12 +264,12 @@
         "avg_latency_ms": 655
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 590
+        "restricted": 2,
+        "avg_latency_ms": 580
       }
     },
     "pagasa-wis2-api": {
@@ -282,9 +282,9 @@
         "avg_latency_ms": 10561
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 1,
-        "issues": 0,
+        "issues": 1,
         "unavailable": 0,
         "restricted": 0,
         "avg_latency_ms": 13782
@@ -300,12 +300,12 @@
         "avg_latency_ms": 2433
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2584
+        "avg_latency_ms": 3130
       }
     },
     "phivolcs-portal": {
@@ -318,12 +318,12 @@
         "avg_latency_ms": 1462
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1656
+        "avg_latency_ms": 1416
       }
     },
     "doh-portal": {
@@ -336,12 +336,12 @@
         "avg_latency_ms": 3
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 3
+        "restricted": 2,
+        "avg_latency_ms": 2
       }
     },
     "deped-portal": {
@@ -354,12 +354,12 @@
         "avg_latency_ms": 200
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
-        "avg_latency_ms": 239
+        "restricted": 2,
+        "avg_latency_ms": 456
       }
     },
     "dpwh-portal": {
@@ -372,12 +372,12 @@
         "avg_latency_ms": 847
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 964
+        "avg_latency_ms": 971
       }
     },
     "dswd-portal": {
@@ -390,12 +390,12 @@
         "avg_latency_ms": 2917
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2375
+        "avg_latency_ms": 2302
       }
     },
     "bir-portal": {
@@ -408,12 +408,12 @@
         "avg_latency_ms": 1295
       },
       "2026-11-26": {
-        "checks": 1,
-        "success": 1,
+        "checks": 2,
+        "success": 2,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1935
+        "avg_latency_ms": 2033
       }
     },
     "comelec-portal": {
@@ -426,11 +426,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-26": {
-        "checks": 1,
+        "checks": 2,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 1,
+        "restricted": 2,
         "avg_latency_ms": 2
       }
     }
