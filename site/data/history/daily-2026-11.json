@@ -20,12 +20,12 @@
         "avg_latency_ms": 674
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1453
+        "avg_latency_ms": 1290
       }
     },
     "psa-openstat-portal": {
@@ -46,11 +46,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 3
       }
     },
@@ -72,11 +72,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 2
       }
     },
@@ -98,12 +98,12 @@
         "avg_latency_ms": 1592
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1825
+        "avg_latency_ms": 1864
       }
     },
     "data-gov-ph-ckan-api": {
@@ -124,12 +124,12 @@
         "avg_latency_ms": 1100
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1367
+        "avg_latency_ms": 1405
       }
     },
     "philgeps-open-data": {
@@ -150,12 +150,12 @@
         "avg_latency_ms": 1242
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1297
+        "avg_latency_ms": 1296
       }
     },
     "dbm-main-portal": {
@@ -176,12 +176,12 @@
         "avg_latency_ms": 1974
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2144
+        "avg_latency_ms": 2114
       }
     },
     "coa-main-portal": {
@@ -202,12 +202,12 @@
         "avg_latency_ms": 1077
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 3,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 2,
-        "avg_latency_ms": 1143
+        "restricted": 3,
+        "avg_latency_ms": 959
       }
     },
     "dof-main-portal": {
@@ -228,12 +228,12 @@
         "avg_latency_ms": 446
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 4,
+        "checks": 6,
+        "success": 5,
         "issues": 1,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2496
+        "avg_latency_ms": 2201
       }
     },
     "dict-main-portal": {
@@ -254,11 +254,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 2
       }
     },
@@ -280,11 +280,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 3
       }
     },
@@ -306,11 +306,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 2
       }
     },
@@ -332,12 +332,12 @@
         "avg_latency_ms": 670
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 4,
+        "checks": 6,
+        "success": 5,
         "issues": 0,
         "unavailable": 0,
         "restricted": 1,
-        "avg_latency_ms": 985
+        "avg_latency_ms": 1018
       }
     },
     "house-congress-portal": {
@@ -358,11 +358,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 2
       }
     },
@@ -384,12 +384,12 @@
         "avg_latency_ms": 528
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
-        "avg_latency_ms": 572
+        "restricted": 6,
+        "avg_latency_ms": 581
       }
     },
     "pagasa-wis2-api": {
@@ -410,10 +410,10 @@
         "avg_latency_ms": 13782
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
-        "unavailable": 5,
+        "unavailable": 6,
         "restricted": 0,
         "avg_latency_ms": null
       }
@@ -436,12 +436,12 @@
         "avg_latency_ms": 2802
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2312
+        "avg_latency_ms": 2398
       }
     },
     "phivolcs-portal": {
@@ -462,12 +462,12 @@
         "avg_latency_ms": 1897
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 5,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 0,
-        "avg_latency_ms": 1843
+        "restricted": 1,
+        "avg_latency_ms": 1732
       }
     },
     "doh-portal": {
@@ -488,11 +488,11 @@
         "avg_latency_ms": 2
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 2
       }
     },
@@ -514,12 +514,12 @@
         "avg_latency_ms": 364
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
-        "avg_latency_ms": 317
+        "restricted": 6,
+        "avg_latency_ms": 301
       }
     },
     "dpwh-portal": {
@@ -540,12 +540,12 @@
         "avg_latency_ms": 1037
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1043
+        "avg_latency_ms": 1036
       }
     },
     "dswd-portal": {
@@ -566,12 +566,12 @@
         "avg_latency_ms": 2296
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 2457
+        "avg_latency_ms": 2452
       }
     },
     "bir-portal": {
@@ -592,12 +592,12 @@
         "avg_latency_ms": 1532
       },
       "2026-11-27": {
-        "checks": 5,
-        "success": 5,
+        "checks": 6,
+        "success": 6,
         "issues": 0,
         "unavailable": 0,
         "restricted": 0,
-        "avg_latency_ms": 1174
+        "avg_latency_ms": 1240
       }
     },
     "comelec-portal": {
@@ -618,11 +618,11 @@
         "avg_latency_ms": 1
       },
       "2026-11-27": {
-        "checks": 5,
+        "checks": 6,
         "success": 0,
         "issues": 0,
         "unavailable": 0,
-        "restricted": 5,
+        "restricted": 6,
         "avg_latency_ms": 1
       }
     }
